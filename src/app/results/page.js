@@ -1,7 +1,18 @@
 export default function RouteInfo() {
   return (
       <div>
-        <h1>This is the route info page</h1>
+        <table>
+            <tr>
+                <td>Dat</td>
+                <td>Dat</td>
+                <td>Dat</td>
+            </tr>
+            <tr>
+                <td>Dat</td>
+                <td>Dat</td>
+                <td>Dat</td>
+            </tr>
+        </table>
       </div>
   )
 }
