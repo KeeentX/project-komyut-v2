@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model PlaceTypes {
+  TypeID   String  @id
+  TypeName String?
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model Places {
+  PlaceID String  @id
+  Name    String?
+  TypeID  String?
+
+  @@ignore
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Routes {
+  Departure   String?
+  Destination String?
+  JeepneyCode String?
+  isVerified  Boolean?  @default(false)
+  Upvotes     Int?      @default(0)
+  Downvotes   Int?      @default(0)
+  UserID      String?
+  DateAdded   DateTime? @default(now()) @db.Timestamptz(6)
+  Payment     Int?      @db.SmallInt
+  Distance    Int?      @db.SmallInt
+  RouteID     String    @id
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Users {
+  UserID        String    @id
+  Email         String?   @unique
+  Password      String?
+  isModerator   Boolean?  @default(false)
+  Contributions Int?      @default(0) @db.SmallInt
+  RegisterDate  DateTime? @default(now()) @db.Timestamptz(6)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model VerifiedRoutes {
+  UserID  String?
+  Date    DateTime? @default(now()) @db.Timestamptz(6)
+  RouteID String    @id
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model Votes {
+  UserID    String?
+  RouteID   String?
+  Type      Boolean?
+  VotedDate DateTime? @default(now()) @db.Timestamptz(6)
+  VoteID    String    @id
+}
